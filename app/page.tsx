@@ -25,6 +25,13 @@ const recommendations = [
   'When target_tokens exceeds input size, return input unchanged, passthrough not recompression',
 ]
 
+const disclosureTimeline = [
+  { label: 'Testing began', value: 'April 19, 2026' },
+  { label: 'Report drafted', value: 'April 20, 2026' },
+  { label: 'Disclosed to vendor', value: 'April 20, 2026 → contact: support@litepruner.com' },
+  { label: 'Patch status', value: 'Awaiting vendor response' },
+]
+
 export default function Page() {
   const sorted = [...findings].sort((a, b) => severityOrder[a.severity] - severityOrder[b.severity])
   const totalFindings = findings.length
@@ -95,6 +102,32 @@ export default function Page() {
                 <p className="mt-3 text-base" style={{ color: 'var(--text2)' }}>
                   Findings are preserved below in full, with severity visualizations and exhaustion telemetry layered in for faster review.
                 </p>
+              </div>
+
+              <div className="mt-8 border-t pt-8" style={{ borderColor: 'var(--border)' }}>
+                <p className="mb-4 text-sm font-semibold uppercase tracking-[0.22em]" style={{ color: 'var(--text3)' }}>
+                  Disclosure Timeline
+                </p>
+                <div className="space-y-4" style={{ fontFamily: 'Consolas, "SFMono-Regular", "Cascadia Code", monospace' }}>
+                  {disclosureTimeline.map((item, index) => (
+                    <div key={item.label} className="flex gap-4">
+                      <div className="flex flex-col items-center pt-1">
+                        <span className="h-2.5 w-2.5 rounded-full" style={{ background: '#94a3b8' }} />
+                        {index < disclosureTimeline.length - 1 ? (
+                          <span className="mt-2 h-10 w-px" style={{ background: 'rgba(148, 163, 184, 0.35)' }} />
+                        ) : null}
+                      </div>
+                      <div className="pb-1">
+                        <p className="text-xs uppercase tracking-[0.18em]" style={{ color: 'var(--text3)' }}>
+                          {item.label}
+                        </p>
+                        <p className="mt-1 text-sm" style={{ color: 'var(--text2)' }}>
+                          {item.value}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
 
               <div className="mt-8">
@@ -250,9 +283,21 @@ export default function Page() {
                       </div>
                     </div>
 
-                    <span className={`w-fit rounded-full px-3.5 py-1.5 text-sm font-semibold capitalize ${c.badge}`}>
-                      {f.severity}
-                    </span>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span
+                        className="w-fit rounded-full border px-3.5 py-1.5 text-sm font-semibold"
+                        style={{
+                          background: '#f8fafc',
+                          borderColor: 'rgba(148, 163, 184, 0.28)',
+                          color: '#475569',
+                        }}
+                      >
+                        CVSS {f.cvss}
+                      </span>
+                      <span className={`w-fit rounded-full px-3.5 py-1.5 text-sm font-semibold capitalize ${c.badge}`}>
+                        {f.severity}
+                      </span>
+                    </div>
                   </div>
 
                   <p className="mt-5 text-base leading-8 sm:text-lg" style={{ color: 'var(--text2)' }}>
@@ -267,6 +312,28 @@ export default function Page() {
                       {f.evidence}
                     </p>
                   </div>
+
+                  {f.reproductionExample ? (
+                    <div className="mt-4 rounded-[22px] border px-4 py-4" style={{ borderColor: 'var(--border)', background: 'rgba(248, 250, 252, 0.92)' }}>
+                      <p className="mb-3 text-xs font-semibold uppercase tracking-[0.24em]" style={{ color: 'var(--text3)' }}>
+                        Reproduction example
+                      </p>
+                      <div
+                        className="space-y-2 rounded-2xl border px-4 py-4 text-sm leading-6 sm:text-[0.95rem]"
+                        style={{
+                          borderColor: 'rgba(148, 163, 184, 0.18)',
+                          background: '#ffffff',
+                          color: 'var(--text2)',
+                          fontFamily: 'Consolas, "SFMono-Regular", "Cascadia Code", monospace',
+                        }}
+                      >
+                        <p><span style={{ color: 'var(--text3)' }}>Endpoint:</span> {f.reproductionExample.endpoint}</p>
+                        <p><span style={{ color: 'var(--text3)' }}>Request:</span> {f.reproductionExample.request}</p>
+                        <p><span style={{ color: 'var(--text3)' }}>Observed:</span> {f.reproductionExample.observed}</p>
+                        <p><span style={{ color: 'var(--text3)' }}>Expected:</span> {f.reproductionExample.expected}</p>
+                      </div>
+                    </div>
+                  ) : null}
                 </article>
               )
             })}
@@ -275,7 +342,7 @@ export default function Page() {
 
         <footer className="pb-4 pt-10">
           <p className="text-sm" style={{ color: 'var(--text3)' }}>
-            Conducted by Pratham · April 2026 · Responsible disclosure, contact support@litepruner.com
+            Conducted by Pratham Hegde · <a href="https://prathamhegde.com" target="_blank" rel="noreferrer" style={{ color: 'var(--text3)', textDecoration: 'underline' }}>prathamhegde.com</a> · Arizona State University · April 2026 · Responsible disclosure: support@litepruner.com
           </p>
         </footer>
       </div>
