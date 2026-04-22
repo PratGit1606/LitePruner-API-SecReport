@@ -117,11 +117,11 @@ export default function Page() {
                           <span className="mt-2 h-10 w-px" style={{ background: 'rgba(148, 163, 184, 0.35)' }} />
                         ) : null}
                       </div>
-                      <div className="pb-1">
+                      <div className="min-w-0 pb-1">
                         <p className="text-xs uppercase tracking-[0.18em]" style={{ color: 'var(--text3)' }}>
                           {item.label}
                         </p>
-                        <p className="mt-1 text-sm" style={{ color: 'var(--text2)' }}>
+                        <p className="mt-1 break-words text-sm" style={{ color: 'var(--text2)' }}>
                           {item.value}
                         </p>
                       </div>
@@ -327,10 +327,10 @@ export default function Page() {
                           fontFamily: 'Consolas, "SFMono-Regular", "Cascadia Code", monospace',
                         }}
                       >
-                        <p><span style={{ color: 'var(--text3)' }}>Endpoint:</span> {f.reproductionExample.endpoint}</p>
-                        <p><span style={{ color: 'var(--text3)' }}>Request:</span> {f.reproductionExample.request}</p>
-                        <p><span style={{ color: 'var(--text3)' }}>Observed:</span> {f.reproductionExample.observed}</p>
-                        <p><span style={{ color: 'var(--text3)' }}>Expected:</span> {f.reproductionExample.expected}</p>
+                        <p className="break-words"><span style={{ color: 'var(--text3)' }}>Endpoint:</span> {f.reproductionExample.endpoint}</p>
+                        <p className="break-all"><span style={{ color: 'var(--text3)' }}>Request:</span> {f.reproductionExample.request}</p>
+                        <p className="break-words"><span style={{ color: 'var(--text3)' }}>Observed:</span> {f.reproductionExample.observed}</p>
+                        <p className="break-words"><span style={{ color: 'var(--text3)' }}>Expected:</span> {f.reproductionExample.expected}</p>
                       </div>
                     </div>
                   ) : null}
@@ -341,9 +341,13 @@ export default function Page() {
         </section>
 
         <footer className="pb-4 pt-10">
-          <p className="text-sm" style={{ color: 'var(--text3)' }}>
-            Conducted by Pratham Hegde · <a href="https://prathamhegde.com" target="_blank" rel="noreferrer" style={{ color: 'var(--text3)', textDecoration: 'underline' }}>prathamhegde.com</a> · Arizona State University · April 2026 · Responsible disclosure: support@litepruner.com
-          </p>
+          <div className="flex flex-wrap gap-x-2 gap-y-1 text-sm" style={{ color: 'var(--text3)' }}>
+            <span>Conducted by Pratham Hegde ·</span>
+            <a href="https://prathamhegde.com" target="_blank" rel="noreferrer" style={{ color: 'var(--text3)', textDecoration: 'underline' }}>
+              prathamhegde.com
+            </a>
+            <span>· Arizona State University · April 2026 · Responsible disclosure: support@litepruner.com</span>
+          </div>
         </footer>
       </div>
     </main>
